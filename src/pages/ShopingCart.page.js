@@ -22,4 +22,16 @@ export class ShopingCartPage extends BaseSwagLabPage {
     async removeCartItemById(id) {
         await this.cartItems.nth(id).locator(this.removeItemSelector).click();
     }
+
+    async selectProductSort(sortParams) {
+        await this.page.selectOption('.product_sort_container', sortParams);
+    }
+
+    async getAllItems() {
+        return this.page.$$eval('.inventory_item_name', (items) => items.map((item) => item.textContent));
+    }
+
+    async getAllPrices() {
+        return this.page.$$eval('.inventory_item_price', (prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
+    }
 }
