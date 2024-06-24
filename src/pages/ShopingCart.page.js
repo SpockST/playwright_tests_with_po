@@ -6,8 +6,11 @@ export class ShopingCartPage extends BaseSwagLabPage {
     cartItemSelector = '.cart_item';
 
     removeItemSelector = '[id^="remove"]';
+
     productNamesSelector = '.inventory_item_name';
+
     pricesSelector = '.inventory_item_price';
+    
     productSortContainerSelector = '.product_sort_container';
 
     get headerTitle() { return this.page.locator('.title'); }
