@@ -6,6 +6,9 @@ export class ShopingCartPage extends BaseSwagLabPage {
     cartItemSelector = '.cart_item';
 
     removeItemSelector = '[id^="remove"]';
+    productNamesSelector = '.inventory_item_name';
+    pricesSelector = '.inventory_item_price';
+    productSortContainerSelector = '.product_sort_container';
 
     get headerTitle() { return this.page.locator('.title'); }
 
@@ -24,14 +27,14 @@ export class ShopingCartPage extends BaseSwagLabPage {
     }
 
     async selectProductSort(sortParams) {
-        await this.page.selectOption('.product_sort_container', sortParams);
+        await this.page.selectOption(this.productSortContainerSelector, sortParams);
     }
 
-    async getAllItems() {
-        return this.page.locator('.inventory_item_name').allInnerTexts( (items) => items.map((item) => item.textContent));
+    async getAllProductNames() {
+        return this.page.locator(this.productNamesSelector).allInnerTexts( (name) => name.map((name) => name.textContent));
     }
 
     async getAllPrices() {
-        return this.page.locator('.inventory_item_price').allInnerTexts( (prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
+        return this.page.locator(this.pricesSelector).allInnerTexts( (prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
     }
 }

@@ -10,14 +10,14 @@ test.describe('Inventory Sorting', () => {
 
     test('Sort items by Name (A to Z)', async ({ shopingCartPage }) => {
         await shopingCartPage.selectProductSort('az');
-        const itemNames = await shopingCartPage.getAllItems();
+        const itemNames = await shopingCartPage.getAllProductNames();
         const sortedNames = [...itemNames].sort();
         expect(itemNames).toEqual(sortedNames);
     });
 
     test('Sort items by Name (Z to A)', async ({ shopingCartPage }) => {
         await shopingCartPage.selectProductSort('za');
-        const itemNames = await shopingCartPage.getAllItems();
+        const itemNames = await shopingCartPage.getAllProductNames();
         const sortedNames = [...itemNames].sort().reverse();
         expect(itemNames).toEqual(sortedNames);
     });
