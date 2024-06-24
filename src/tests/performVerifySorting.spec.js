@@ -1,10 +1,11 @@
 const { expect } = require('@playwright/test');
 const { test } = require('../fixture');
+const {login, password}  = require('../auth/user.json');
 
 test.describe('Inventory Sorting', () => {
     test.beforeEach(async ({ loginPage }) => {
         await loginPage.navigate();
-        await loginPage.performLogin('standard_user', 'secret_sauce');
+        await loginPage.performLogin(login, password);
     });
 
     test('Sort items by Name (A to Z)', async ({ shopingCartPage }) => {

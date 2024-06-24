@@ -28,10 +28,10 @@ export class ShopingCartPage extends BaseSwagLabPage {
     }
 
     async getAllItems() {
-        return this.page.$$eval('.inventory_item_name', (items) => items.map((item) => item.textContent));
+        return this.page.locator('.inventory_item_name').allInnerTexts( (items) => items.map((item) => item.textContent));
     }
 
     async getAllPrices() {
-        return this.page.$$eval('.inventory_item_price', (prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
+        return this.page.locator('.inventory_item_price').allInnerTexts( (prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
     }
 }
