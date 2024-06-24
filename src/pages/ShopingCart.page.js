@@ -31,7 +31,7 @@ export class ShopingCartPage extends BaseSwagLabPage {
     }
 
     async getAllProductNames() {
-        return this.page.locator(this.productNamesSelector).allInnerTexts( (name) => name.map((name) => name.textContent));
+        return this.page.locator(this.productNamesSelector).allInnerTexts( (names) => names.map((name) => name.textContent));
     }
 
     async getAllPrices() {
