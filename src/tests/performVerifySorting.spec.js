@@ -5,37 +5,47 @@ const { login, password } = require('../auth/user.json');
 test.describe('Inventory Sorting', () => {
     const sortParamsName = ['az', 'za'];
     const sortParamsPrise = ['lohi', 'hilo'];
-    
+    let sortedNameAZ = [];
+    let sortedNamesZA = [];
+    let sortedPricesLohi = [];
+    let sortedPricesHilo = [];
+    const testParams = {
+        az: sortedNameAZ,
+        za: sortedNamesZA,
+        lohi: sortedPricesLohi,
+        hilo: sortedPricesHilo,
+    };
+
     test.beforeEach(async ({ inventoryPage, loginPage }) => {
         await inventoryPage.navigate();
         await loginPage.performLogin(login, password);
+
+        const itemNames = await inventoryPage.getAllProductNames();
+        sortedNameAZ = [...itemNames].sort();
+        sortedNamesZA = [...itemNames].sort().reverse();
+
+        const itemPrices = await inventoryPage.getAllPrices();
+        sortedPricesLohi = [...itemPrices].sort((a, b) => a - b);
+        sortedPricesHilo = [...itemPrices].sort((a, b) => b - a);
     });
 
-    sortParamsName.forEach(sortParam => {
-        test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
-            let sortedNames = [];
-            await inventoryPage.selectProductSort(sortParam);
-            const itemNames = await inventoryPage.getAllProductNames();
-            if(sortParam === 'az') {
-                sortedNames = [...itemNames].sort();
+    for (const param in testParams) {
+        test(`Sort items by Name ${param}`, async ({ inventoryPage }) => {
+            let teatData = [];
+            await inventoryPage.selectProductSort(param);
+            if(param === 'az' || param === 'za') {
+                teatData = await inventoryPage.getAllProductNames();
             } else {
-                sortedNames = [...itemNames].sort().reverse();
+                teatData = await inventoryPage.getAllPrices();
             }
-            expect(itemNames).toEqual(sortedNames);
-        }); 
-    })
+            expect(teatData).toEqual(testParams[param]);
+        });
+    }
 
-    sortParamsPrise.forEach(sortParam => {
-        test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
-            let sortedPrices = [];
-            await inventoryPage.selectProductSort(sortParam);
-            const itemPrices = await inventoryPage.getAllPrices();
-            if(sortParam === 'lohi') {
-                sortedPrices = [...itemPrices].sort((a, b) => a - b);
-            } else {
-                sortedPrices = [...itemPrices].sort((a, b) => b - a);
-            }
-            expect(itemPrices).toEqual(sortedPrices);
-        }); 
-    })
+    // sortParamsName.forEach(sortParam => {
+    //     test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
+    //         await inventoryPage.selectProductSort(sortParam);
+    //         expect(itemNames).toEqual(sortedNames);
+    //     });
+    // })
 });
