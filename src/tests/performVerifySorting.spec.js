@@ -12,7 +12,7 @@ test.describe('Inventory Sorting', () => {
     });
 
     sortParamsName.forEach(sortParam => {
-        test.only(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
+        test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
             let sortedNames = [];
             await inventoryPage.selectProductSort(sortParam);
             const itemNames = await inventoryPage.getAllProductNames();
@@ -26,7 +26,7 @@ test.describe('Inventory Sorting', () => {
     })
 
     sortParamsPrise.forEach(sortParam => {
-        test.only(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
+        test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
             let sortedPrices = [];
             await inventoryPage.selectProductSort(sortParam);
             const itemPrices = await inventoryPage.getAllPrices();
