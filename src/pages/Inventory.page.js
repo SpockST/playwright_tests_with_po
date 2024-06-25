@@ -9,7 +9,7 @@ export class InventoryPage extends BaseSwagLabPage {
 
     productSortContainerSelector = '.product_sort_container';
 
-    get headerTitle() { return this.page.locator('.title'); } //
+    get headerTitle() { return this.page.locator('.title'); }
 
     get inventoryItems() { return this.page.locator('.inventory_item'); }
 

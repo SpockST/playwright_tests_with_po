@@ -5,15 +5,15 @@ const { login, password } = require('../auth/user.json');
 test.describe('Inventory Sorting', () => {
     const sortParamsName = ['az', 'za'];
     const sortParamsPrise = ['lohi', 'hilo'];
-    let sortedNameAZ = [];
-    let sortedNamesZA = [];
-    let sortedPricesLohi = [];
-    let sortedPricesHilo = [];
+    // let sortedNameAZ = [];
+    // let sortedNamesZA = [];
+    // let sortedPricesLohi = [];
+    // let sortedPricesHilo = [];
     const testParams = {
-        az: sortedNameAZ,
-        za: sortedNamesZA,
-        lohi: sortedPricesLohi,
-        hilo: sortedPricesHilo,
+        // az: sortedNameAZ,
+        // za: sortedNamesZA,
+        // lohi: sortedPricesLohi,
+        // hilo: sortedPricesHilo,
     };
 
     test.beforeEach(async ({ inventoryPage, loginPage }) => {
@@ -21,16 +21,16 @@ test.describe('Inventory Sorting', () => {
         await loginPage.performLogin(login, password);
 
         const itemNames = await inventoryPage.getAllProductNames();
-        sortedNameAZ = [...itemNames].sort();
-        sortedNamesZA = [...itemNames].sort().reverse();
+        testParams.az = [...itemNames].sort();
+        testParams.za = [...itemNames].sort().reverse();
 
         const itemPrices = await inventoryPage.getAllPrices();
-        sortedPricesLohi = [...itemPrices].sort((a, b) => a - b);
-        sortedPricesHilo = [...itemPrices].sort((a, b) => b - a);
+        testParams.lohi = [...itemPrices].sort((a, b) => a - b);
+        testParams.hilo = [...itemPrices].sort((a, b) => b - a);
     });
 
     for (const param in testParams) {
-        test(`Sort items by Name ${param}`, async ({ inventoryPage }) => {
+        test(`Sort items by ${param}`, async ({ inventoryPage }) => {
             let teatData = [];
             await inventoryPage.selectProductSort(param);
             if(param === 'az' || param === 'za') {
