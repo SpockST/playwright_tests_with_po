@@ -24,10 +24,12 @@ export class InventoryPage extends BaseSwagLabPage {
     }
 
     async getAllProductNames() {
-        return this.page.locator(this.productNamesSelector).allInnerTexts((names) => names.map((name) => name.textContent));
+        return this.page.locator(this.productNamesSelector)
+            .allInnerTexts((names) => names.map((name) => name.textContent));
     }
 
     async getAllPrices() {
-        return this.page.locator(this.pricesSelector).allInnerTexts((prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
+        const priceTexts = await this.page.locator(this.pricesSelector).allInnerTexts();
+        return priceTexts.map(price => parseFloat(price.replace('$', '')));
     }
 }

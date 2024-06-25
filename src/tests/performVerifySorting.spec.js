@@ -3,49 +3,36 @@ const { test } = require('../fixture');
 const { login, password } = require('../auth/user.json');
 
 test.describe('Inventory Sorting', () => {
-    const sortParamsName = ['az', 'za'];
-    const sortParamsPrise = ['lohi', 'hilo'];
-    // let sortedNameAZ = [];
-    // let sortedNamesZA = [];
-    // let sortedPricesLohi = [];
-    // let sortedPricesHilo = [];
-    const testParams = {
-        // az: sortedNameAZ,
-        // za: sortedNamesZA,
-        // lohi: sortedPricesLohi,
-        // hilo: sortedPricesHilo,
-    };
+    const testParams = [
+        { name: 'az', sort: [] },
+        { name: 'za', sort: [] },
+        { name: 'lohi', sort: [] },
+        { name: 'hilo', sort: [] },
+    ];
 
     test.beforeEach(async ({ inventoryPage, loginPage }) => {
         await inventoryPage.navigate();
         await loginPage.performLogin(login, password);
 
         const itemNames = await inventoryPage.getAllProductNames();
-        testParams.az = [...itemNames].sort();
-        testParams.za = [...itemNames].sort().reverse();
+        testParams[0].sort = [...itemNames].sort();
+        testParams[1].sort = [...itemNames].sort().reverse();
 
         const itemPrices = await inventoryPage.getAllPrices();
-        testParams.lohi = [...itemPrices].sort((a, b) => a - b);
-        testParams.hilo = [...itemPrices].sort((a, b) => b - a);
+        testParams[2].sort = [...itemPrices].sort((a, b) => a - b);
+        testParams[3].sort = [...itemPrices].sort((a, b) => b - a);
     });
 
-    for (const param in testParams) {
-        test(`Sort items by ${param}`, async ({ inventoryPage }) => {
-            let teatData = [];
-            await inventoryPage.selectProductSort(param);
-            if(param === 'az' || param === 'za') {
-                teatData = await inventoryPage.getAllProductNames();
+    testParams.forEach((elem) => {
+        test.only(`Sort items by ${elem.name}`, async ({ inventoryPage }) => {
+            let testData = [];
+            await inventoryPage.selectProductSort(elem.name);
+            if (elem.name === 'az' || elem.name === 'za') {
+                testData = await inventoryPage.getAllProductNames();
             } else {
-                teatData = await inventoryPage.getAllPrices();
+                testData = await inventoryPage.getAllPrices();
             }
-            expect(teatData).toEqual(testParams[param]);
+            expect(testData).toEqual(elem.sort);
         });
-    }
-
-    // sortParamsName.forEach(sortParam => {
-    //     test(`Sort items by Name ${sortParam}`, async ({ inventoryPage }) => {
-    //         await inventoryPage.selectProductSort(sortParam);
-    //         expect(itemNames).toEqual(sortedNames);
-    //     });
-    // })
+    });
 });
