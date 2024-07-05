@@ -12,6 +12,7 @@ export class InventoryPage extends BaseSwagLabPage {
     productDescriptionsSelector = '.inventory_item_desc';
 
     get headerTitle() { return this.page.locator('.title'); }
+    get headerTitle() { return this.page.locator('.title'); }
 
     get inventoryItems() { return this.page.locator('.inventory_item'); }
 
@@ -26,11 +27,13 @@ export class InventoryPage extends BaseSwagLabPage {
     }
 
     async getAllProductNames() {
-        return this.page.locator(this.productNamesSelector).allInnerTexts((names) => names.map((name) => name.textContent));
+        return this.page.locator(this.productNamesSelector)
+            .allInnerTexts((names) => names.map((name) => name.textContent));
     }
 
     async getAllPrices() {
-        return this.page.locator(this.pricesSelector).allInnerTexts((prices) => prices.map((price) => parseFloat(price.textContent.replace('$', ''))));
+        const priceTexts = await this.page.locator(this.pricesSelector).allInnerTexts();
+        return priceTexts.map(price => parseFloat(price.replace('$', '')));
     }
 
     async getAllProductDescriptions() {
