@@ -28,4 +28,4 @@ test.describe('Inventory Sorting', () => {
             expect(testData).toEqual(elem.func(testData));
         });
     });
-});
+}); 
