@@ -34,7 +34,8 @@ export class ShopingCartPage extends BaseSwagLabPage {
     }
 
     async getItemsPricesById(id) {
-        return await this.page.locator(this.pricesSelector).nth(id).innerText();
+        const price = await this.page.locator(this.pricesSelector).nth(id).innerText();
+        return parseFloat(price.replace('$', ''));
     }
 
     async getItemsDescriptionById(id) {
