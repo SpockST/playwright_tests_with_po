@@ -26,17 +26,17 @@ test.describe('Checking the name, prise and description of the attached product 
                 
             });
 
-            test.only(`Checking the card name of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
+            test(`Checking the card name of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
                 const card = await shopingCartPage.geItemsNameById(0);
                 expect(card).toEqual(name);
             });
 
-            test.only(`Checking the card prise of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
+            test(`Checking the card prise of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
                 const priseShopinCart = await shopingCartPage.getItemsPricesById(0);
                 expect(priseShopinCart).toEqual(prise);
             });
 
-            test.only(`Checking the card description of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
+            test(`Checking the card description of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
                 const descrShopinCart = await shopingCartPage.getItemsDescriptionById(0);
                 expect(descrShopinCart).toEqual(description);
             });
