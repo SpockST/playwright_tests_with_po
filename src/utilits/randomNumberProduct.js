@@ -1,7 +1,7 @@
-export function getRandomNumbers() { 
-    const randomCount = Math.floor(Math.random() * 5); 
+export function getRandomNumbers(max, min = 0) { 
+    const randomCount = Math.floor(Math.random() * (max - min) + min); 
     const result = [] 
-    for (let i = randomCount; i >= 0; i--) {   
+    for (let i = randomCount; i >= min; i--) {   
         result.push(i) 
     } 
     return result 
