@@ -9,6 +9,17 @@ export class InventoryPage extends BaseSwagLabPage {
 
     productSortContainerSelector = '.product_sort_container';
 
+    productDescriptionsSelector = '.inventory_item_desc';
+
+    shoppingCartLinkSelector = '.shopping_cart_link';
+
+    pricesSelector = '.inventory_item_price';
+
+    productNamesSelector = '.inventory_item_name';
+
+    productDescriptionsSelector = '.inventory_item_desc';
+
+    get headerTitle() { return this.page.locator('.title'); }
     get headerTitle() { return this.page.locator('.title'); }
 
     get inventoryItems() { return this.page.locator('.inventory_item'); }
@@ -17,6 +28,10 @@ export class InventoryPage extends BaseSwagLabPage {
 
     async addItemToCartById(id) {
         await this.addItemToCartBtns.nth(id).click();
+    }
+
+    async addItemToCartFirst(id) {
+        await this.page.locator(`.inventory_item:nth-of-type(${id}) [id^="add-to-cart"]`).click();
     }
 
     async selectProductSort(sortParams) {
@@ -31,5 +46,26 @@ export class InventoryPage extends BaseSwagLabPage {
     async getAllPrices() {
         const priceTexts = await this.page.locator(this.pricesSelector).allInnerTexts();
         return priceTexts.map(price => parseFloat(price.replace('$', '')));
+    }
+
+    async getAllProductDescriptions() {
+        return this.page.locator(this.productDescriptionsSelector).allInnerTexts((descriptions) => descriptions.map((descr) => descr.textContent));
+    }
+
+    async openShoppingCart() {
+        await this.page.locator(this.shoppingCartLinkSelector).click();
+    }
+
+    async geItemsNameById(id) {
+        return await this.page.locator(this.productNamesSelector).nth(id).innerText();
+    }
+
+    async getItemsPricesById(id) {
+        const price = await this.page.locator(this.pricesSelector).nth(id).innerText();
+        return parseFloat(price.replace('$', ''));
+    }
+
+    async getItemsDescriptionById(id) {
+        return await this.page.locator(this.productDescriptionsSelector).nth(id).innerText();
     }
 }
