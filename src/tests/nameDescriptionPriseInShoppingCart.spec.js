@@ -1,6 +1,6 @@
 const { expect } = require('@playwright/test');
 const { test } = require('../fixture');
-const { login, password } = require('../auth/user.json');
+const USER = require('../auth/user.json');
 const { getRandomNumbers } = require('../utilits/randomNumberProduct');
 let randomArr = getRandomNumbers(5);
 
@@ -8,7 +8,7 @@ test.describe('Checking the name, prise and description of the attached product 
     
     test.beforeEach(async ({ loginPage, inventoryPage }) => {
         await inventoryPage.navigate();
-        await loginPage.performLogin(login, password);
+        await loginPage.performLogin(USER.login, USER.password);
     });
 
     randomArr.forEach((indexProduct) => {

@@ -13,6 +13,8 @@ export class ShopingCartPage extends BaseSwagLabPage {
 
     productDescriptionsSelector = '.inventory_item_desc';
 
+    buttonCheskout = '.checkout_button';
+
     get headerTitle() { return this.page.locator('.title'); }
 
     get cartItems() { return this.page.locator(this.cartItemSelector); }
@@ -40,6 +42,10 @@ export class ShopingCartPage extends BaseSwagLabPage {
 
     async getItemsDescriptionById(id) {
         return await this.page.locator(this.productDescriptionsSelector).nth(id).innerText();
+    }
+
+    async cheskout() {
+        await this.page.locator(this.buttonCheskout).click();
     }
 
 }
