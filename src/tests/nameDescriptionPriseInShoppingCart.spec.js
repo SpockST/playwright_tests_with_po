@@ -14,13 +14,13 @@ test.describe('Checking the name, prise and description of the attached product 
     randomArr.forEach((indexProduct) => {
         test.describe('', () => {
             let name = '';
-            let prise = 0;
+            let price = 0;
             let description = '';
 
             test.beforeEach(async ({ shopingCartPage, inventoryPage }) => {
                 await inventoryPage.addItemToCartById(indexProduct);
                 name = await inventoryPage.geItemsNameById(indexProduct);
-                prise = await inventoryPage.getItemsPricesById(indexProduct);
+                price = await inventoryPage.getItemsPricesById(indexProduct);
                 description = await inventoryPage.getItemsDescriptionById(indexProduct);
                 await shopingCartPage.navigate();
                 
@@ -32,8 +32,8 @@ test.describe('Checking the name, prise and description of the attached product 
             });
 
             test(`Checking the card prise of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
-                const priseShopinCart = await shopingCartPage.getItemsPricesById(0);
-                expect(priseShopinCart).toEqual(prise);
+                const priceShopinCart = await shopingCartPage.getItemsPricesById(0);
+                expect(priceShopinCart).toEqual(price);
             });
 
             test(`Checking the card description of the product added to Shopping Cart with index ${indexProduct}`, async ({ shopingCartPage }) => {
