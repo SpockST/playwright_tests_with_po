@@ -1,6 +1,6 @@
 const { expect } = require('@playwright/test');
 const { test } = require('../fixture');
-const { login, password } = require('../auth/user.json');
+const USER = require('../auth/user.json');
 
 test.describe('Inventory Sorting', () => {
     const testParams = [
@@ -12,7 +12,7 @@ test.describe('Inventory Sorting', () => {
 
     test.beforeEach(async ({ inventoryPage, loginPage }) => {
         await inventoryPage.navigate();
-        await loginPage.performLogin(login, password);
+        await loginPage.performLogin(USER.login, USER.password);
     });
 
     testParams.forEach((elem) => {

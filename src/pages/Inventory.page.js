@@ -68,4 +68,24 @@ export class InventoryPage extends BaseSwagLabPage {
     async getItemsDescriptionById(id) {
         return await this.page.locator(this.productDescriptionsSelector).nth(id).innerText();
     }
+
+    async getNamesDescriptionsPricesAndTotalPrise(arr) {
+        const objResult = {
+            name: [],
+            description: [],
+            prices: [],
+            totalPrice: 0
+        };
+        
+        for (const indexProduct of arr) {
+            await this.addItemToCartById(indexProduct);
+            objResult.name.push(await this.geItemsNameById(indexProduct));
+            objResult.description.push(await this.getItemsDescriptionById(indexProduct));
+            const price = await this.getItemsPricesById(indexProduct); // Предполагаем, что здесь должно быть получение цены
+            objResult.prices.push(price);
+            objResult.totalPrice += price;
+        }
+    
+        return objResult;
+    }
 }
