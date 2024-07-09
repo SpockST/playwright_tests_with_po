@@ -2,7 +2,7 @@ const { expect } = require('@playwright/test');
 const { test } = require('../fixture');
 const  USER = require('../auth/user.json');
 const { getRandomNumbers } = require('../utilits/randomNumberProduct');
-let randomArr = getRandomNumbers(5);
+const randomArr = getRandomNumbers(5);
 
 test.describe('Checking the name, description and price of the product on the checkout page', () => {
     let testData = {};
