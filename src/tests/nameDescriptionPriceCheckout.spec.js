@@ -39,7 +39,6 @@ test.describe('Checking the name, description and price of the product on the ch
 
     test('Checking the product totalPrice on the checkout page', async ({ checkoutPage }) => {
             let rez = await checkoutPage.getTotalPrice();
-            console.log(rez);
             expect(rez).toEqual(testData.totalPrice);
     });
 });
